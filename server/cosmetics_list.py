@@ -1,23 +1,7 @@
 from flask import jsonify, request
 import numpy as np 
 import pandas as pd
-
-
-
-df = pd.read_csv('datasets/cosmetics.csv', dtype={
-	'combination': 'bool',
-	'dry': 'bool',
-	'normal':'bool',
-	'oily': 'bool',
-	'sensitive': 'bool'
-	}, names=['label', 'brand', 'name', 'price', 'rank', 'ingredients', 'combination', 'dry', 'normal', 'oily', 'sensitive'], header=0)
-
-
-df['id'] = df.index
-
-df = (df.loc[df['ingredients'] != 'No Info'])
-
-df['brand'] = df['brand'].str.replace("KIEHL'S SINCE 1851", "KIEHL'S")
+from server.data import df
 
 def cosmetics_list():
 	filters = (
@@ -35,17 +19,7 @@ def cosmetics_list():
 	return jsonify(df_dict)
 
 
-#labels = df['label'].unique().tolist()
-#print(labels)
-# brands = df['brand'].unique().tolist()
-# print(brands)
-# max_price = df['price'].max()
-# print(max_price)
-# min_price = df['price'].min()
-# print(min_price)
-
 all = np.array([True for i in df.iterrows()])
-
 
 
 def label_filter():
