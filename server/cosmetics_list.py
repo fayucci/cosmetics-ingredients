@@ -17,6 +17,7 @@ df['id'] = df.index
 
 df = (df.loc[df['ingredients'] != 'No Info'])
 
+df['brand'] = df['brand'].str.replace("KIEHL'S SINCE 1851", "KIEHL'S")
 
 def cosmetics_list():
 	filters = (
