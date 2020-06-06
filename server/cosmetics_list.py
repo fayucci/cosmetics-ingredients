@@ -15,6 +15,7 @@ df = pd.read_csv('datasets/cosmetics.csv', dtype={
 
 df['id'] = df.index
 
+df = (df.loc[df['ingredients'] != 'No Info'])
 
 
 def cosmetics_list():
@@ -29,7 +30,7 @@ def cosmetics_list():
 		normal_filter() &
 		oily_filter() &
 		sensitive_filter())
-	df_dict = df.loc[filters].to_dict('records')
+	df_dict = df.loc[filters].drop('ingredients', axis=1).to_dict('records')
 	return jsonify(df_dict)
 
 
