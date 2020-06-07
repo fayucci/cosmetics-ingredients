@@ -13,3 +13,5 @@ App.route('/api/categories', methods=['GET'])(categories)
 App.route('/api/cosmetic', methods=['GET'])(cosmetic)
 
 App.route('/api/brands', methods=['GET'])(brands)
+
+App.route('/')(lambda: App.send_static_file('index.html'))

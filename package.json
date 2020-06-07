@@ -1,0 +1,32 @@
+{
+  "name": "cosmetics-ingredients",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Web client for cosmetic-ingredients",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "build:dev": "rollup -c -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fayucci/cosmetics-ingredients.git"
+  },
+  "author": "Fatima Yucci",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fayucci/cosmetics-ingredients/issues"
+  },
+  "homepage": "https://github.com/fayucci/cosmetics-ingredients#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
+    "rollup": "^2.13.1",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-livereload": "^1.3.0",
+    "rollup-plugin-svelte": "^5.2.2",
+    "rollup-plugin-terser": "^6.1.0",
+    "svelte": "^3.23.0"
+  }
+}
