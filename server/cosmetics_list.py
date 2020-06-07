@@ -16,7 +16,8 @@ def cosmetics_list():
 		oily_filter() &
 		sensitive_filter()
 	)
-	df_dict = df.loc[filters].drop('ingredients', axis=1).to_dict('records')
+	sort, direction = sort_direction()
+	df_dict = df.loc[filters].drop('ingredients', axis=1).sort_values(by=sort, ascending=direction).to_dict('records')
 	return jsonify(df_dict)
 
 
@@ -95,3 +96,8 @@ def sensitive_filter():
 	else:
 		return all
 
+def sort_direction():
+	sort = request.args.get('sort', '', str)
+	ascending =  request.args.get('ascending', '', str)
+	if ascending in boolean_params:
+		return (sort, ascending)
