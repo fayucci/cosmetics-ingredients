@@ -3,5 +3,7 @@ from server.data import df
 
 def cosmetic():
     id = request.args.get('id', type=int)
-    return Response(df.iloc[id].to_json(), mimetype='application/json')
-
+    row = df.iloc[id]
+    ingredients = row['ingredients'].split(', ')
+    row['ingredients'] = {ingredient: len(ingredients) - i for i, ingredient in enumerate(ingredients)}
+    return Response(row.to_json(), mimetype='application/json')

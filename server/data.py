@@ -23,6 +23,3 @@ brands = df['brand'].unique().tolist()
 max_price = df['price'].max()
 
 min_price = df['price'].min()
-
-
-print(type(df.iloc[12].to_dict().get("combination")))

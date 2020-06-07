@@ -14,7 +14,8 @@ def cosmetics_list():
 		dry_filter() &
 		normal_filter() &
 		oily_filter() &
-		sensitive_filter())
+		sensitive_filter()
+	)
 	df_dict = df.loc[filters].drop('ingredients', axis=1).to_dict('records')
 	return jsonify(df_dict)
 
