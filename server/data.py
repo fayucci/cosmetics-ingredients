@@ -23,3 +23,7 @@ brands = df['brand'].unique().tolist()
 max_price = df['price'].max()
 
 min_price = df['price'].min()
+
+df['ingredients'] = df['ingredients'].str.replace(r'(\*+)$', '', regex=True)
+
+print(df['ingredients'])
