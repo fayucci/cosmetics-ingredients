@@ -17,7 +17,7 @@ def cosmetics_list():
 		sensitive_filter()
 	)
 	sort, direction = sort_direction()
-	df_dict = df.loc[filters].drop('ingredients', axis=1).sort_values(by=sort, ascending=direction).to_dict('records')
+	df_dict = df.loc[filters].drop(['ingredients', 'x', 'y'], axis=1).sort_values(by=sort, ascending=direction).to_dict('records')
 	return jsonify(df_dict)
 
 
