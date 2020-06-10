@@ -2,21 +2,39 @@ import pandas as pd
 import numpy as np
 from sklearn.manifold import TSNE
 
-df = pd.read_csv('datasets/cosmetics.csv', dtype={
-	'combination': 'bool',
-	'dry': 'bool',
-	'normal':'bool',
-	'oily': 'bool',
-	'sensitive': 'bool'
-	}, names=['label', 'brand', 'name', 'price', 'rank', 'ingredients', 'combination', 'dry', 'normal', 'oily', 'sensitive'], header=0)
-
+df = pd.read_csv('datasets/cosmetics.csv', 
+    dtype={
+    'combination': 'bool',
+    'dry': 'bool',
+    'normal':'bool',
+    'oily': 'bool',
+    'sensitive': 'bool'
+    },
+    names=[
+        'label',
+        'brand', 
+        'name', 
+        'price', 
+        'rank', 
+        'ingredients', 
+        'combination', 
+        'dry', 
+        'normal', 
+        'oily', 
+        'sensitive'], 
+    header=0)
 
 df['id'] = df.index
 
 df = (df.loc[df['ingredients'] != 'No Info'])
 
-df['brand'] = df['brand'].str.replace("KIEHL'S SINCE 1851", "KIEHL'S")
+pattern = "^Visit.*"
+filter = df['ingredients'].str.contains(pattern)
+df = df[~filter]
 
+df['ingredients'] = df['ingredients'].str.replace(r'\*+', '', regex=True)
+
+df['brand'] = df['brand'].str.replace("KIEHL'S SINCE 1851", "KIEHL'S")
 
 labels = df['label'].unique().tolist()
 
@@ -26,14 +44,9 @@ max_price = df['price'].max()
 
 min_price = df['price'].min()
 
-df['ingredients'] = df['ingredients'].str.replace(r'(\*+)$', '', regex=True)
+df = (df.loc[df['name'] != '#NAME?'])
 
-i = df[df['name'] == '#NAME?'].index
-
-df = df.drop(i[0])
-
-ii = df[df['name'] == 'Hydra-Therapy Memory Sleep Mask'].index
-df = df.drop(ii[0])
+df = (df.loc[df['ingredients'] != '#NAME?'])
 
 corpus = [ingredients.lower().split(', ') for ingredients in df['ingredients']]
 
