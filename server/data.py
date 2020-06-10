@@ -28,6 +28,10 @@ min_price = df['price'].min()
 
 df['ingredients'] = df['ingredients'].str.replace(r'(\*+)$', '', regex=True)
 
+i = df[df['name'] == '#NAME?'].index
+
+df = df.drop(i[0])
+
 corpus = [ingredients.lower().split(', ') for ingredients in df['ingredients']]
 
 all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
