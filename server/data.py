@@ -32,6 +32,9 @@ i = df[df['name'] == '#NAME?'].index
 
 df = df.drop(i[0])
 
+ii = df[df['name'] == 'Hydra-Therapy Memory Sleep Mask'].index
+df = df.drop(ii[0])
+
 corpus = [ingredients.lower().split(', ') for ingredients in df['ingredients']]
 
 all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
