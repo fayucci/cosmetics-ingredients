@@ -105,7 +105,7 @@ def sensitive_filter():
 def sort_direction():
 	sort = request.args.get('sort', 'name', str)
 	ascending =  request.args.get('ascending', None, str)
-	print(ascending)
+	
 	if ascending in boolean_params:
 		return (sort, boolean_params[ascending])
 	else:
