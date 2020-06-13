@@ -3,9 +3,7 @@ import numpy as np
 from sklearn.manifold import TSNE
 import re
 
-df = pd.read_csv('datasets/cosmetic_filter_COPY.csv')
-
-df = df.drop(['Unnamed: 0', 'Unnamed: 13'], axis=1)
+df = pd.read_csv('datasets/cosmetic.csv')
 
 df['ingredients'] = df['ingredients'].str.replace(r'\.+$', '', regex=True)
 
@@ -45,3 +43,4 @@ df['y'] = tsne_features[:, 1]
 
 df['dist'] = 0.0
 
+df['id'] = df.index
