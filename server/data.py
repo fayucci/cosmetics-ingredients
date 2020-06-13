@@ -1,54 +1,15 @@
 import pandas as pd
 import numpy as np
 from sklearn.manifold import TSNE
+import re
 
-df = pd.read_csv('datasets/cosmetics.csv', 
-    dtype={
-    'combination': 'bool',
-    'dry': 'bool',
-    'normal':'bool',
-    'oily': 'bool',
-    'sensitive': 'bool'
-    },
-    names=[
-        'label',
-        'brand', 
-        'name', 
-        'price', 
-        'rank', 
-        'ingredients', 
-        'combination', 
-        'dry', 
-        'normal', 
-        'oily', 
-        'sensitive'], 
-    header=0)
+df = pd.read_csv('datasets/cosmetic_filter_COPY.csv')
 
-df['id'] = df.index
+df = df.drop(['Unnamed: 0', 'Unnamed: 13'], axis=1)
 
-df = (df.loc[df['ingredients'] != 'No Info'])
+df['ingredients'] = df['ingredients'].str.replace(r'\.+$', '', regex=True)
 
-pattern = "^Visit.*"
-filter = df['ingredients'].str.contains(pattern)
-df = df[~filter]
-
-df['ingredients'] = df['ingredients'].str.replace(r'\*+', '', regex=True)
-
-df['brand'] = df['brand'].str.replace("KIEHL'S SINCE 1851", "KIEHL'S")
-
-labels = df['label'].unique().tolist()
-
-brands = df['brand'].unique().tolist()
-
-max_price = df['price'].max()
-
-min_price = df['price'].min()
-
-df = (df.loc[df['name'] != '#NAME?'])
-
-df = (df.loc[df['ingredients'] != '#NAME?'])
-
-corpus = [ingredients.lower().split(', ') for ingredients in df['ingredients']]
+corpus = [re.split(r'\s*,\s+', ingredients.lower()) for ingredients in df['ingredients']]
 
 all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
 
