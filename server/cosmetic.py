@@ -9,9 +9,7 @@ def cosmetic():
     for i in range(len(df)):
         p2 = np.array([df['x'][i], df['y'][i]]).reshape(-1, 1)
         df.dist[i] = (p1 * p2).sum() / (np.sqrt(np.sum(p1 ** 2))*np.sqrt(np.sum(p2 ** 2)))
-    ingredients = row['ingredients'].split(', ')
-    ingredients_count = len(ingredients)
-    row['ingredients'] = [[ingredient, (ingredients_count - i)] for i, ingredient in enumerate(ingredients)]
+    row['ingredients'] = row['ingredients'].split(', ')
     row['similars'] = df.sort_values('dist').head().drop(['ingredients','x', 'y', 'dist'], axis=1).to_dict('records')
     
     return Response(row.to_json(), mimetype='application/json')
