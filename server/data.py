@@ -16,7 +16,7 @@ all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
 unique_ingr = list(dict.fromkeys(all_ingre))
 
 ingre_tupla = [(i, ingre) for ingre, i in enumerate(unique_ingr)]
-    
+
 ingredient_idx = dict(ingre_tupla)
 
 M = len(df)
@@ -42,3 +42,6 @@ tsne_features = model.fit_transform(A)
  
 df['x'] = tsne_features[:, 0]
 df['y'] = tsne_features[:, 1]
+
+df['dist'] = 0.0
+
