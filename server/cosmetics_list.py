@@ -18,7 +18,6 @@ def cosmetics_list():
 		oily_filter(),
 		sensitive_filter()
 	]
-	print(raw_filters)
 	all_elements = np.array([True for i in df.iterrows()])
 	filters = reduce(lambda a, b: a&b, (_filter for _filter in raw_filters if _filter is not None), all_elements)
 	page_size = 50
@@ -63,33 +62,30 @@ def rank_filter():
 
 boolean_params = {'': True, 'true': True, 'false': False}
 
-def combination_filter():
-	combination = request.args.get('combination', None, str)
-	if combination in boolean_params:
-		return df['combination'] == boolean_params[combination]
+def boolean_param(param):
+	return boolean_params.get(param, None)
 
+def combination_filter():
+	combination = request.args.get('combination', None, boolean_param)
+	return df['combination'] == combination if combination is not None else None
 
 def dry_filter():
-	dry = request.args.get('dry', None, str)
-	if dry in boolean_params:
-		return df['dry'] == boolean_params[dry]
+	combination = request.args.get('dry', None, boolean_param)
+	return df['dry'] == combination if combination is not None else None
 
 
 def normal_filter():
-	normal = request.args.get('normal', None, str)
-	if normal in boolean_params:
-		return df['normal'] == boolean_params[normal]
+	combination = request.args.get('normal', None, boolean_param)
+	return df['normal'] == combination if combination is not None else None
 
 def oily_filter():
-	oily = request.args.get('oily', None, str)
-	if oily in boolean_params:
-		return df['oily'] == boolean_params[oily]
+	combination = request.args.get('oily', None, boolean_param)
+	return df['oily'] == combination if combination is not None else None
 
 
 def sensitive_filter():
-	sensitive = request.args.get('sensitive', None, str)
-	if sensitive in boolean_params:
-		return df['sensitive'] == boolean_params[sensitive]
+	combination = request.args.get('sensitive', None, boolean_param)
+	return df['sensitive'] == combination if combination is not None else None
 
 
 def sort_direction():
