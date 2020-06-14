@@ -41,6 +41,4 @@ tsne_features = model.fit_transform(A)
 df['x'] = tsne_features[:, 0]
 df['y'] = tsne_features[:, 1]
 
-df['dist'] = 0.0
-
 df['id'] = df.index
