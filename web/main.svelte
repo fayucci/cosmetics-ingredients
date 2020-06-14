@@ -1,13 +1,33 @@
 <script>
-	import Products from "./products.svelte"
+	import Products from "./product-list.svelte"
+	import Product from "./product-details.svelte"
+
+	import BrandFilters from "./brand-filter.svelte"
+	import routes from "./routes"
+
 	import { onMount } from 'svelte';
 
-	let products = [];
-	onMount(async () => {
-		const response = await fetch("/api/cosmetics");
-		const content = await response.json();
-		products = content
-	});
+	let filters = {};
 </script>
 
-<Products {products} />
+
+{#if $routes[0] === "main"}
+	<Products {filters} />
+{:else if $routes[0] === "details"}
+	<Product id={$routes[1]} />
+{/if}
+
+
+
+
+		<!-- <aside class="filters">
+			<BrandFilters
+				selected={filters.brand}
+				on:change="{({ detail }) => { filters = { ...filters, ...detail }}}"
+			/>
+		</aside> -->
+<style>
+	:global(body) {
+		background-color: hsl(0, 0%, 95%);
+	}
+</style>
