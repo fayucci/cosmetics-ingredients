@@ -1,6 +1,5 @@
 from flask import request, Response
 from server.data import df
-import numpy as np
 
 def cosmetic():
     id = request.args.get('id', type=int)
