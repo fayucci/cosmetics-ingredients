@@ -11,7 +11,7 @@ def cosmetics_list():
 		brand_filter(), 
 		min_price_filter(), 
 		max_price_filter(), 
-		rank_filter(), 
+		rating_filter(), 
 		combination_filter(), 
 		dry_filter(),
 		normal_filter(),
@@ -55,10 +55,10 @@ def max_price_filter():
 		return df['price'] <= max_price
 
 
-def rank_filter():
-	rank =  request.args.get('rank', 1, int)
-	if rank:
-		return df['rank'] >= rank
+def rating_filter():
+	rating =  request.args.get('rating', 1, int)
+	if rating:
+		return df['rating'] >= rating
 
 
 boolean_params = {'': True, 'true': True, 'false': False}
