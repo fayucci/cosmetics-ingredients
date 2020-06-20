@@ -1,6 +1,5 @@
 from flask import jsonify, request
 import numpy as np 
-import pandas as pd
 from server.data import df
 from math import ceil
 from functools import reduce
@@ -50,7 +49,6 @@ def min_price_filter():
 
 def max_price_filter():
 	max_price = request.args.get('max-price', float('inf'), int)
-	print(max_price)
 	if max_price:
 		return df['price'] <= max_price
 

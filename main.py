@@ -1,4 +1,3 @@
-from flask import Flask, jsonify, render_template
 from server.cosmetics_list import cosmetics_list
 from server.app import App
 from server.categories import categories

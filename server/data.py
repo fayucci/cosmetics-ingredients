@@ -7,6 +7,8 @@ df = pd.read_csv('datasets/cosmetic.csv')
 
 df['ingredients'] = df['ingredients'].str.replace(r'\.+$', '', regex=True)
 
+df['id'] = df.index
+
 corpus = [re.split(r'\s*,\s+', ingredients.lower()) for ingredients in df['ingredients']]
 
 all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
@@ -41,4 +43,3 @@ tsne_features = model.fit_transform(A)
 df['x'] = tsne_features[:, 0]
 df['y'] = tsne_features[:, 1]
 
-df['id'] = df.index
