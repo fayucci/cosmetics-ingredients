@@ -7,8 +7,6 @@ df = pd.read_csv('datasets/cosmetic.csv')
 
 df['ingredients'] = df['ingredients'].str.replace(r'\.+$', '', regex=True)
 
-#df = df.astype({'combination': 'bool', 'dry': 'bool', 'sensitive': 'bool', 'normal': 'bool', 'oily': 'bool'})
-
 corpus = [re.split(r'\s*,\s+', ingredients.lower()) for ingredients in df['ingredients']]
 
 all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)

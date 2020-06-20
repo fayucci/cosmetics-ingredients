@@ -31,9 +31,9 @@ def cosmetics_list():
 
 
 def label_filter():
-	label_name = request.args.get('label', '', str)
-	if label_name:
-		return df['label'] == label_name
+	category_name = request.args.get('label', '', str)
+	if category_name:
+		return df['category'] == category_name
 
 
 def brand_filter():
@@ -45,11 +45,12 @@ def brand_filter():
 def min_price_filter():
 	min_price = request.args.get('min-price', 0, int)
 	if min_price:
-		return df['price'] >= 0
+		return df['price'] >= min_price
 
 
 def max_price_filter():
-	max_price = request.args.get('max-price', 400, int)
+	max_price = request.args.get('max-price', float('inf'), int)
+	print(max_price)
 	if max_price:
 		return df['price'] <= max_price
 

@@ -1,8 +1,10 @@
-from flask import request, Response
+from flask import request, Response, abort
 from server.data import df
 
 def cosmetic():
     id = request.args.get('id', type=int)
+    if id not in df.index:
+        return abort(404)
     row = df.loc[id]
     row['ingredients'] = row['ingredients'].split(', ')
     radius = 0.5
