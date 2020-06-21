@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.manifold import TSNE
 import re
+import asyncio
 
 df = pd.read_csv('datasets/cosmetic.csv')
 
@@ -9,37 +10,41 @@ df['ingredients'] = df['ingredients'].str.replace(r'\.+$', '', regex=True)
 
 df['id'] = df.index
 
-# corpus = [re.split(r'\s*,\s+', ingredients.lower()) for ingredients in df['ingredients']]
 
-# all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
+async def main():
+    corpus = [re.split(r'\s*,\s+', ingredients.lower()) for ingredients in df['ingredients']]
 
-# unique_ingr = list(dict.fromkeys(all_ingre))
+    all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
 
-# ingre_tupla = [(i, ingre) for ingre, i in enumerate(unique_ingr)]
+    unique_ingr = list(dict.fromkeys(all_ingre))
 
-# ingredient_idx = dict(ingre_tupla)
+    ingre_tupla = [(i, ingre) for ingre, i in enumerate(unique_ingr)]
 
-# M = len(df)
-# N = len(ingredient_idx)
+    ingredient_idx = dict(ingre_tupla)
 
-# # matrix
-# A = np.zeros((M, N))
+    M = len(df)
+    N = len(ingredient_idx)
 
-# def oh_encoder(tokens):
-#     x = np.zeros(N)
-#     for ingredient in tokens:
-#         idx = ingredient_idx[ingredient]
-#         x[idx] = 1
-#     return x
+    # matrix
+    A = np.zeros((M, N))
 
-# i = 0
-# for tokens in corpus:
-#     A[i, :] = oh_encoder(tokens)
-#     i += 1
+    def oh_encoder(tokens):
+        x = np.zeros(N)
+        for ingredient in tokens:
+            idx = ingredient_idx[ingredient]
+            x[idx] = 1
+        return x
 
-# model = TSNE(n_components=2, learning_rate=200, random_state=42)
-# tsne_features = model.fit_transform(A)
- 
-# df['x'] = tsne_features[:, 0]
-# df['y'] = tsne_features[:, 1]
+    i = 0
+    for tokens in corpus:
+        A[i, :] = oh_encoder(tokens)
+        i += 1
 
+    model = TSNE(n_components=2, learning_rate=200, random_state=42)
+    tsne_features = model.fit_transform(A)
+    
+    df['x'] = tsne_features[:, 0]
+    df['y'] = tsne_features[:, 1]
+    print('ready')
+
+asyncio.run(main())
