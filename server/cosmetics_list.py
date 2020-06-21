@@ -37,7 +37,6 @@ def label_filter():
 
 def brand_filter():
 	brand_name = request.args.get('brand')
-	print(brand_name)
 	if brand_name:
 		return df['brand'] == brand_name
 

@@ -15,3 +15,5 @@ App.route('/api/brands', methods=['GET'])(brands)
 
 App.route('/')(lambda: App.send_static_file('index.html'))
 
+if __name__ == '__main__':
+    App.run(debug=False)
