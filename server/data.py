@@ -3,15 +3,16 @@ import numpy as np
 from sklearn.manifold import TSNE
 import re
 import asyncio
-
+from threading import Thread
 df = pd.read_csv('datasets/cosmetic.csv')
 
 df['ingredients'] = df['ingredients'].str.replace(r'\.+$', '', regex=True)
 
 df['id'] = df.index
 
+def compute_similarity():
+    print('preparing')
 
-async def main():
     corpus = [re.split(r'\s*,\s+', ingredients.lower()) for ingredients in df['ingredients']]
 
     all_ingre = (ingredient for ingredients in corpus for ingredient in ingredients)
@@ -39,6 +40,7 @@ async def main():
     for tokens in corpus:
         A[i, :] = oh_encoder(tokens)
         i += 1
+    print('crunching')
 
     model = TSNE(n_components=2, learning_rate=200, random_state=42)
     tsne_features = model.fit_transform(A)
@@ -47,4 +49,4 @@ async def main():
     df['y'] = tsne_features[:, 1]
     print('ready')
 
-asyncio.run(main())
+Thread(target = compute_similarity).start()
