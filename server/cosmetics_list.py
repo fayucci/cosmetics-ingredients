@@ -30,13 +30,14 @@ def cosmetics_list():
 
 
 def label_filter():
-	category_name = request.args.get('label', '', str)
+	category_name = request.args.get('category', '', str)
 	if category_name:
 		return df['category'] == category_name
 
 
 def brand_filter():
-	brand_name = request.args.get('brand', '', str)
+	brand_name = request.args.get('brand')
+	print(brand_name)
 	if brand_name:
 		return df['brand'] == brand_name
 
