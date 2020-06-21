@@ -22,7 +22,7 @@ def cosmetics_list():
 	page_size = 50
 	page = page_num()
 	sort, direction = sort_direction()
-	data_drop = df.drop(['ingredients', 'x', 'y'], axis=1)
+	data_drop = df.drop(['ingredients'], axis=1)
 	data_filter = data_drop.loc[filters]
 	data_sort = data_filter.sort_values(by=sort, ascending=direction)
 	data_page = data_sort.iloc[page * page_size: (page * page_size) + page_size]
