@@ -1,13 +1,32 @@
 <script>
-	import Products from "./products.svelte"
+	import Products from "./product-list.svelte"
+	import Product from "./product-details.svelte"
+	import id from "./route-id"
+
 	import { onMount } from 'svelte';
 
-	let products = [];
-	onMount(async () => {
-		const response = await fetch("/api/cosmetics");
-		const content = await response.json();
-		products = content
-	});
 </script>
 
-<Products {products} />
+
+{#if $id}
+	<Product id={$id} />
+{:else }
+	<Products />
+{/if}
+
+
+<style>
+	:global(body) {
+		background-color: hsl(0, 0%, 95%);
+	}
+	:global(button):focus {
+		outline: none;
+	}
+	:global(.hidden-scroll) {
+		scrollbar-width: none;
+	}
+	:global(.hidden-scroll)::-webkit-scrollbar {
+		width: 0px;
+		background: transparent;
+	}
+</style>
