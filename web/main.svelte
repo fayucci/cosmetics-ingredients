@@ -8,7 +8,7 @@
 </script>
 
 
-{#if $id}
+{#if typeof $id === "number"}
 	<Product id={$id} />
 {:else }
 	<Products />
