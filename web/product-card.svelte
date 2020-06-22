@@ -1,6 +1,5 @@
 <script>
 	import Rating from "./rating.svelte"
-	import routeId from "./route-id"
 
 	export let brand;
 	export let category;
@@ -19,7 +18,7 @@
 
 <div
 	class="product"
-	on:click={() => ($routeId = id)}
+	on:click={() => { window.location.assign(`/?id=${id}`)}}
 	style="--margin: {margin}"
 	tabindex="-1"
 	role="button"

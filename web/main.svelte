@@ -1,15 +1,13 @@
 <script>
 	import Products from "./product-list.svelte"
 	import Product from "./product-details.svelte"
-	import id from "./route-id"
-
 	import { onMount } from 'svelte';
-
+	
+	const id = new URLSearchParams(window.location.search).get("id")
 </script>
 
-
-{#if typeof $id === "number"}
-	<Product id={$id} />
+{#if id}
+	<Product id={id} />
 {:else }
 	<Products />
 {/if}
