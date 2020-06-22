@@ -9,7 +9,7 @@ def cosmetic():
         return abort(404)
     row = df.loc[id]
     row['ingredients'] = row['ingredients'].split(', ')
-    radius = 0.5
+    radius = 1
     x = row['x']
     y = row['y']
     under_upper_limit = (df['y'] <= y + radius)
