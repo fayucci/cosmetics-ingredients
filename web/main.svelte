@@ -29,4 +29,12 @@
 		width: 0px;
 		background: transparent;
 	}
+
+	:global(a) {
+		color: hsl(240, 49.8%, 50%);
+	}
+	:global(a:visited) {
+		color: hsl(240, 49.8%, 50%);
+	}
+
 </style>

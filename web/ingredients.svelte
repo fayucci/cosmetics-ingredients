@@ -34,7 +34,7 @@
 		const barOpacity = createDownScale(canvas.height/2, 0.5, 50, 100);
 
 		const pR = window.devicePixelRatio;
-		const estimatedHeight = 1.05* ingredients.reduce((top, _, i) => interline + top + lense(top, 128) * textHeight(i), 0)
+		const estimatedHeight = Math.max(300, 1.05* ingredients.reduce((top, _, i) => interline + top + lense(top, 128) * textHeight(i), 0))
 		canvas.height = Math.ceil(estimatedHeight);
 		canvas.style.width = `${canvas.width}px`;
 		canvas.style.height = `${canvas.height}px`;

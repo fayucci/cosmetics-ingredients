@@ -9,23 +9,27 @@
 	import SkinType from "./skin-type.svelte"
 
 	export let id
-	const fetchProduct = async () => {
-		const response = await fetch(`/api/cosmetic?${fromRecord({ id })}`);
-		return response.json();
-	}
 
-	$: productRequest = fetchProduct(id)
+	let loading = true
+	let product
+	const fetchProduct = async () => {
+		product = undefined;
+		loading = true;
+		const response = await fetch(`/api/cosmetic?${fromRecord({ id })}`);
+		product = await response.json();
+		loading = false;
+	}
+	$: fetchProduct(id)
 
 </script>
 
 <main class="product">
 
-	{#await productRequest}
-	{:then product}
-		<div class="back">
-			<a href="/">‹ back to listing</a>
-		</div>
-		<div class="details container">
+	<div class="back">
+		<a href="/">‹ back to listing</a>
+	</div>
+	<div class="details container" data-loading={loading}>
+		{#if product}
 			<div class="content">
 				<h1 class="name">{product.name}</h1>
 				<div class="category">{product.category}</div>
@@ -33,9 +37,11 @@
 				<div class="price">{product.price}$</div>
 				<div class="rating"><Rating value={product.rating}/></div>
 			</div>
-		</div>
-		<div class="skin-types container">
-			<h2 class="header">Suitable for skins </h2>
+		{/if}
+	</div>
+	<div class="skin-types container" data-loading={loading} >
+		<h2 class="header">Suitable for skins </h2>
+		{#if product}
 			<div class="content hidden-scroll">
 				{#if product.dry}<SkinType type="dry"/>{/if}
 				{#if product.sensitive}<SkinType type="sensitive"/>{/if}
@@ -43,34 +49,74 @@
 				{#if product.combination}<SkinType type="combination"/>{/if}
 				{#if product.normal}<SkinType type="normal"/>{/if}
 			</div>
-		</div>
-		<div class="similars container" >
-			<h2 class="header">With similar ingredients</h2>
+		{/if}
+	</div>
+	<div class="similars container" data-loading={loading} >
+		<h2 class="header">With similar ingredients</h2>
+		{#if product}
 			<div class="content hidden-scroll">
-				{#each product.similars.concat(product.similars).concat(product.similars) as similar}
+				{#if product.similars.length === 0}
+					<div class="not-found">
+						We could not find any similar product
+					</div>
+				{/if}
+				{#each product.similars as similar}
 					<ProductCard margin="16px" {...similar}/>
 				{/each}
 			</div>
+		{/if}
+	</div>
+	<div class="ingredients container" data-loading={loading} >
+		<div class="header">
+			<h2>ingredients</h2>
+			<em>Visual Reference</em>
 		</div>
-		<div class="ingredients container">
-			<h2 class="header">Explore the ingredients</h2>
+		{#if product}
 			<div class="canvas" >
 				<Ingredients ingredients={product.ingredients} />
 			</div>
-		</div>
-	{:catch error}
-	{/await}
-
+		{/if}
+	</div>
 </main>
 
 <style>
+
+	.similars .not-found {
+		width: 100%;
+		padding: 8px;
+		background-color: hsl(0, 0%, 96.9%);
+		text-align: center;
+		font-weight: 300;
+		border-radius: 4px;
+	}
 	.container {
 		background: #FFF;
 		border: 1px solid #DDDD;
 		overflow: hidden;
+		display: grid;
 		border-radius: 4px;
 		row-gap: 8px;
 		box-shadow: 0px 0px 5px 0px hsla(0, 0%, 50%, 0.5);
+	}
+	@keyframes blink {
+		from {
+			background: #EEE;
+		}
+		to {
+			background: #BBB;
+		}
+	}
+
+	.container[data-loading="true"] {
+		animation: blink 1s ease infinite alternate-reverse;
+		background: #EEE;
+	}
+	.container[data-loading="true"]:after {
+		content: "";
+		text-align: center;
+		display: grid;
+		min-height: 100px;
+		align-content: center;
 	}
 
 	.content {
@@ -83,11 +129,17 @@
 		align-items: center;
 		padding: 8px;
 		background-color: hsl(240, 50%, 50%);
-		text-transform: uppercase;
 		color: hsl(0, 0%, 100%);
+		justify-content: space-between;
 	}
-
+	
+	.header em {
+		font-weight: 500;
+		font-style: italic;
+		text-decoration: underline;
+	}
 	h2 {
+		text-transform: uppercase;
 		margin: 0;
 		font-size: 18px;
 		font-weight: 500;
@@ -101,6 +153,7 @@
 
 	.canvas {
 		padding: 8px;
+		min-height: 300px 
 	}
 
 	.product {
@@ -197,8 +250,9 @@
 	.ingredients {
 		grid-area: ingredients;
 		display: grid;
-		height: 100%;
-		width: 100%;
+		grid-template-rows: min-content 1fr;
+		/* height: 100%;
+		width: 100%; */
 	}
 
 	.similars {

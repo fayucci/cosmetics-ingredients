@@ -7,7 +7,7 @@
 
 	let categories = []
 	onMount(async () => {
-		const response = await fetch("/api/categories");
+		const response = await fetch("/api/categories", { cache: "force-cache" });
 		categories = await response.json();
 	});
 

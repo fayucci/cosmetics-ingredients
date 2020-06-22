@@ -250,6 +250,7 @@
 		column-gap: 4px;
 		text-align: right;
 		align-items: center;
+		justify-content: right;
 	}
 	.rating {
 		grid-template-columns: 80px min-content;

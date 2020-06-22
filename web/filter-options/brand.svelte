@@ -6,7 +6,7 @@
 
 	let brands = []
 	onMount(async () => {
-		const response = await fetch("/api/brands");
+		const response = await fetch("/api/brands", {cache: "force-cache"});
 		brands = await response.json();
 	});
 
