@@ -16,12 +16,10 @@
 
 </script>
 
-<div
+<a
 	class="product"
-	on:click={() => { window.location.assign(`/?id=${id}`)}}
+	href={`/?id=${id}`}
 	style="--margin: {margin}"
-	tabindex="-1"
-	role="button"
 >
 	<div class="brand">{brand}</div>
 	<div class="category">{category}</div>
@@ -35,7 +33,7 @@
 		<div aria-hidden={!sensitive} class="chip">Sensitive</div>
 		<div aria-hidden={!combination} class="chip">Combination</div>
 	</div>
-</div>
+</a>
 
 <style>
 	.brand {
@@ -92,6 +90,8 @@
 		font-weight: 800;
 	}
 	.product {
+		text-decoration: none;
+		color: inherit;
 		position: relative;
 		user-select: none;
 		border-radius: 4px;

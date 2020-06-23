@@ -52,7 +52,10 @@
 		{/if}
 	</div>
 	<div class="similars container" data-loading={loading} >
-		<h2 class="header">With similar ingredients</h2>
+		<div class="header">
+			<h2>With similar ingredients</h2>
+			<em>t-SNE Estimate</em>
+		</div>
 		{#if product}
 			<div class="content hidden-scroll">
 				{#if product.similars.length === 0}
@@ -68,7 +71,7 @@
 	</div>
 	<div class="ingredients container" data-loading={loading} >
 		<div class="header">
-			<h2>ingredients</h2>
+			<h2>Ingredients</h2>
 			<em>Visual Reference</em>
 		</div>
 		{#if product}
@@ -159,14 +162,15 @@
 	.product {
 		display: grid;
 		max-width: 1300px;
-		grid-template-columns: minmax(300px, 500px) minmax(500px, 800px) ;
+		grid-template-columns: minmax(300px, 400px) minmax(440px, 600px) ;
 		grid-template-rows: min-content min-content min-content min-content 1fr;
 		grid-template-areas: "back ingredients" "details ingredients" "skin-types ingredients" "similars ingredients" ". ingredients";
-		column-gap: 30px;
+		column-gap: 20px;
 		row-gap: 8px;
 		justify-content: center;
 		box-sizing: border-box;
-		margin: 20px auto;
+		padding: 20px;
+		margin: 0 auto;
 	}
 
 	@media only screen and (max-width: 800px) {

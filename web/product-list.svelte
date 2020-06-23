@@ -71,6 +71,7 @@
 				<div class="title">
 					<div>A project by: </div>
 					<a href="https://github.com/fayucci/cosmetics-ingredients" target="__blank" rel="noreferrer noopener"><strong>Fatima Yucci</strong></a>
+					<a href="https://www.linkedin.com/in/fatima-yucci/" target="__blank" rel="noreferrer noopener" style="font-size: 12px; font-weight: 300; text-align: right; font-style: italic;">Job hunting</a>
 				</div>
 				<div class="tech">
 					Powererd by:
@@ -96,14 +97,13 @@
 
 	.credits {
 		display: grid;
-		row-gap: 4px;
+		row-gap: 8px;
 	}
 	.credits .title {
 		display: grid;
+		row-gap: 4px;
 	}
-	.credits .title :nth-child(2) {
-		padding-left: 10px;
-	}
+
 	.tech {
 		font-size: 12px;
 	}
