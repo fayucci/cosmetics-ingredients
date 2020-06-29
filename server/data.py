@@ -5,5 +5,5 @@ import re
 import asyncio
 from threading import Thread
 
-df = pd.read_csv('./server/cosmetics_with_coordenates.csv')
+df = pd.read_csv('datasets/cosmetics_with_coordenates.csv')
 
