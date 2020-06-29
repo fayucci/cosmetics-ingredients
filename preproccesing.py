@@ -48,7 +48,7 @@ def compute_similarity():
     df['x'] = tsne_features[:, 0]
     df['y'] = tsne_features[:, 1]
 
-    df.to_csv('cosmetics_with_coordenates.csv')
+    df.to_csv('server/cosmetics_with_coordenates.csv')
     
     print('ready')
 
